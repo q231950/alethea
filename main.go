@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	"io/ioutil"
 	"net/http"
 	"os"
 
@@ -22,9 +22,23 @@ func main() {
 
 func handler(w http.ResponseWriter, r *http.Request) {
 	log.Infof("Request: %s", r.Method)
-	fmt.Fprintf(w, "Hi there, I love %s!", r.URL.Path[1:])
 }
 
 func postStatusHandler(w http.ResponseWriter, r *http.Request) {
-	w.WriteHeader(http.StatusNotImplemented)
+	body, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		w.WriteHeader(http.StatusExpectationFailed)
+		w.Write([]byte("Unable to read request's body."))
+		return
+	}
+
+	if len(body) == 0 {
+		w.WriteHeader(http.StatusExpectationFailed)
+		w.Write([]byte("The request body must have content."))
+		return
+	}
+
+	log.Infof("the body %s", body)
+
+	w.WriteHeader(http.StatusOK)
 }
