@@ -8,10 +8,16 @@
   version = "v1.0.0"
 
 [[projects]]
+  name = "github.com/davecgh/go-spew"
+  packages = ["spew"]
+  revision = "346938d642f2ec3594ed81d874461961cd0faa76"
+  version = "v1.1.0"
+
+[[projects]]
   name = "github.com/go-pg/pg"
   packages = [".","internal","internal/parser","internal/pool","orm","types"]
-  revision = "91c6bdd887406878e9bde15f3c4a12c1197da739"
-  version = "v6.6.8"
+  revision = "c2405ea05e2013fc1354cf8f61e94152b896ed91"
+  version = "v6.7.0"
 
 [[projects]]
   branch = "master"
@@ -26,14 +32,26 @@
   version = "v0.8.0"
 
 [[projects]]
+  name = "github.com/pmezard/go-difflib"
+  packages = ["difflib"]
+  revision = "792786c7400a136282c1664665ae0a8db921c6c2"
+  version = "v1.0.0"
+
+[[projects]]
   name = "github.com/satori/go.uuid"
   packages = ["."]
-  revision = "879c5887cd475cd7864858769793b2ceb0d44feb"
-  version = "v1.1.0"
+  revision = "f58768cc1a7a7e77a3bd49e98cdd21419399b6a3"
+  version = "v1.2.0"
+
+[[projects]]
+  name = "github.com/stretchr/testify"
+  packages = ["assert"]
+  revision = "b91bfb9ebec76498946beb6af7c0230c7cc7ba6c"
+  version = "v1.2.0"
 
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "153629690ca2867272b899d84ad7fe253f89be94b2fd7595cae2116cc758ae29"
+  inputs-digest = "ae3841d0d17b11207277c94737b824f0724a3a38bfe82ca805dd594f01cfb7a6"
   solver-name = "gps-cdcl"
   solver-version = 1
