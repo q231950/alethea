@@ -7,6 +7,7 @@ import (
 	"github.com/apex/log/handlers/cli"
 	"github.com/q231950/alethea/database"
 	"github.com/q231950/alethea/datastorage"
+	"github.com/q231950/alethea/server"
 )
 
 func main() {
@@ -19,5 +20,5 @@ func main() {
 	dataStorage := datastorage.NewDataStorage(database)
 	dataStorage.CreateIncidentsTable()
 
-	server := Server.New(dataStorage)
+	_ = server.NewServer(dataStorage)
 }
