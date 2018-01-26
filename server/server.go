@@ -17,7 +17,7 @@ type Server struct {
 }
 
 // NewServer returns an instance of Server
-func (Server) NewServer(ds *datastorage.DataStorage) Server {
+func NewServer(ds *datastorage.DataStorage) Server {
 	server := Server{dataStorage: ds}
 	http.HandleFunc("/post", server.postStatusHandler)
 	http.HandleFunc("/", server.handler)
@@ -44,7 +44,7 @@ func (server *Server) postStatusHandler(w http.ResponseWriter, r *http.Request) 
 	}
 
 	incident := model.NewIncident()
-	server.dataStorage.LogIncident(incident)
+	server.dataStorage.StoreIncident(incident)
 
 	log.Infof("the body %s", body)
 	w.WriteHeader(http.StatusOK)
