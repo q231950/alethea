@@ -1,3 +1,4 @@
+// Package datastorage is resposible for storing build results in a given database
 package datastorage
 
 import (
@@ -9,14 +10,15 @@ import (
 	"github.com/q231950/alethea/model"
 )
 
-//
+// DataStorage has a database where it stores build results in
 type DataStorage struct {
 	database pg.DB
 }
 
-func NewDataStorage(db pg.DB) *DataStorage {
+// NewDataStorage creates a new DataStorage. It needs a database to store build results in
+func NewDataStorage(database pg.DB) *DataStorage {
 	log.Infof("NewDataStorage")
-	ds := DataStorage{database: db}
+	ds := DataStorage{database: database}
 	return &ds
 }
 
@@ -46,7 +48,8 @@ func (ds *DataStorage) CreateIncidentsTable() {
 	log.Infof("CreateIncidentsTable")
 }
 
-func (ds *DataStorage) LogIncident(incident model.Incident) error {
+// StoreIncident stores the given build result in the database
+func (ds *DataStorage) StoreIncident(incident model.Incident) error {
 	log.Infof("log incident")
 	err := ds.database.Insert(&incident)
 	if err != nil {
