@@ -1,0 +1,59 @@
+{
+	"ImportPath": "github.com/q231950/alethea",
+	"GoVersion": "go1.9",
+	"GodepVersion": "v80",
+	"Deps": [
+		{
+			"ImportPath": "github.com/apex/log",
+			"Rev": "8f3a15d95392c8fc202d1e1059f46df21dff2992"
+		},
+		{
+			"ImportPath": "github.com/apex/log/handlers/cli",
+			"Rev": "8f3a15d95392c8fc202d1e1059f46df21dff2992"
+		},
+		{
+			"ImportPath": "github.com/go-pg/pg",
+			"Comment": "v6.7.0-3-ge853c38",
+			"Rev": "e853c389ac58540f27c414b7bef75fbddfe9242d"
+		},
+		{
+			"ImportPath": "github.com/go-pg/pg/internal",
+			"Comment": "v6.7.0-3-ge853c38",
+			"Rev": "e853c389ac58540f27c414b7bef75fbddfe9242d"
+		},
+		{
+			"ImportPath": "github.com/go-pg/pg/internal/parser",
+			"Comment": "v6.7.0-3-ge853c38",
+			"Rev": "e853c389ac58540f27c414b7bef75fbddfe9242d"
+		},
+		{
+			"ImportPath": "github.com/go-pg/pg/internal/pool",
+			"Comment": "v6.7.0-3-ge853c38",
+			"Rev": "e853c389ac58540f27c414b7bef75fbddfe9242d"
+		},
+		{
+			"ImportPath": "github.com/go-pg/pg/orm",
+			"Comment": "v6.7.0-3-ge853c38",
+			"Rev": "e853c389ac58540f27c414b7bef75fbddfe9242d"
+		},
+		{
+			"ImportPath": "github.com/go-pg/pg/types",
+			"Comment": "v6.7.0-3-ge853c38",
+			"Rev": "e853c389ac58540f27c414b7bef75fbddfe9242d"
+		},
+		{
+			"ImportPath": "github.com/jinzhu/inflection",
+			"Rev": "1c35d901db3da928c72a72d8458480cc9ade058f"
+		},
+		{
+			"ImportPath": "github.com/pkg/errors",
+			"Comment": "v0.8.0-5-gc605e28",
+			"Rev": "c605e284fe17294bda444b34710735b29d1a9d90"
+		},
+		{
+			"ImportPath": "github.com/satori/go.uuid",
+			"Comment": "v1.2.0-4-g36e9d2e",
+			"Rev": "36e9d2ebbde5e3f13ab2e25625fd453271d6522e"
+		}
+	]
+}

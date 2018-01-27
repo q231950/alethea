@@ -43,9 +43,14 @@ func (server *Server) postStatusHandler(w http.ResponseWriter, r *http.Request) 
 		return
 	}
 
-	incident := model.NewIncident()
-	server.dataStorage.StoreIncident(incident)
+	incident, err := model.NewIncident()
+	if err == nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		log.Infof("Failed to create new build result from payload %s", err)
+	} else {
+		server.dataStorage.StoreIncident(incident)
 
-	log.Infof("the body %s", body)
-	w.WriteHeader(http.StatusOK)
+		log.Infof("the body %s", body)
+		w.WriteHeader(http.StatusOK)
+	}
 }

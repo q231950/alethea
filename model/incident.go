@@ -9,9 +9,9 @@ type Incident struct {
 	Value      string
 }
 
-// New creates an incident with a random identifier
-func NewIncident() Incident {
-	identifier := uuid.NewV4().String()
-	incident := Incident{Identifier: identifier, Source: "source", Value: "value"}
-	return incident
+// NewIncident creates an incident with a random identifier
+func NewIncident() (Incident, error) {
+	identifier, error := uuid.NewV4()
+	incident := Incident{Identifier: identifier.String(), Source: "source", Value: "value"}
+	return incident, error
 }
