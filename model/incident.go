@@ -11,7 +11,7 @@ type Incident struct {
 
 // NewIncident creates an incident with a random identifier
 func NewIncident() (Incident, error) {
-	identifier, error := uuid.NewV4()
+	identifier, err := uuid.NewV4()
 	incident := Incident{Identifier: identifier.String(), Source: "source", Value: "value"}
-	return incident, error
+	return incident, err
 }
