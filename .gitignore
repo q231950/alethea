@@ -1,7 +1,6 @@
 .vscode
 alethea
 
-vendor
 # Binaries for programs and plugins
 *.exe
 *.dll
