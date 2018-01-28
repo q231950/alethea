@@ -13,16 +13,20 @@ import (
 
 // Server serves the http API endpoint
 type Server struct {
-	dataStorage *datastorage.DataStorage
+	dataStorage datastorage.DataStorage
 }
 
 // NewServer returns an instance of Server
-func NewServer(ds *datastorage.DataStorage) Server {
+func NewServer(ds datastorage.DataStorage) Server {
 	server := Server{dataStorage: ds}
 	http.HandleFunc("/post", server.postStatusHandler)
 	http.HandleFunc("/", server.handler)
-	http.ListenAndServe(":8080", nil)
 	return server
+}
+
+// Serve starts serving the service
+func (server *Server) Serve() error {
+	return http.ListenAndServe(":8080", nil)
 }
 
 func (server *Server) handler(w http.ResponseWriter, r *http.Request) {
@@ -43,14 +47,18 @@ func (server *Server) postStatusHandler(w http.ResponseWriter, r *http.Request) 
 		return
 	}
 
-	incident, err := model.NewIncident()
-	if err == nil {
+	buildResult, err := model.NewIncident()
+	server.handleBuildResult(buildResult, err, w)
+
+	log.Infof("the body %s", body)
+}
+
+func (server *Server) handleBuildResult(buildResult model.Incident, err error, w http.ResponseWriter) {
+	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		log.Infof("Failed to create new build result from payload %s", err)
 	} else {
-		server.dataStorage.StoreIncident(incident)
-
-		log.Infof("the body %s", body)
+		server.dataStorage.StoreIncident(buildResult)
 		w.WriteHeader(http.StatusOK)
 	}
 }
