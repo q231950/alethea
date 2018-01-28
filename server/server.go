@@ -13,16 +13,20 @@ import (
 
 // Server serves the http API endpoint
 type Server struct {
-	dataStorage *datastorage.DataStorage
+	dataStorage datastorage.DataStorage
 }
 
 // NewServer returns an instance of Server
-func NewServer(ds *datastorage.DataStorage) Server {
+func NewServer(ds datastorage.DataStorage) Server {
 	server := Server{dataStorage: ds}
 	http.HandleFunc("/post", server.postStatusHandler)
 	http.HandleFunc("/", server.handler)
-	http.ListenAndServe(":8080", nil)
 	return server
+}
+
+// Serve starts serving the service
+func (server *Server) Serve() error {
+	return http.ListenAndServe(":8080", nil)
 }
 
 func (server *Server) handler(w http.ResponseWriter, r *http.Request) {

@@ -5,7 +5,6 @@ import (
 
 	"github.com/apex/log"
 	"github.com/apex/log/handlers/cli"
-	"github.com/q231950/alethea/database"
 	"github.com/q231950/alethea/datastorage"
 	"github.com/q231950/alethea/server"
 )
@@ -16,9 +15,9 @@ func main() {
 
 	log.Info("Starting alethea...")
 
-	database := database.PostgresqlDatabase()
-	dataStorage := datastorage.NewDataStorage(database)
+	dataStorage := datastorage.New()
 	dataStorage.CreateIncidentsTable()
 
-	_ = server.NewServer(dataStorage)
+	server := server.NewServer(dataStorage)
+	server.Serve()
 }

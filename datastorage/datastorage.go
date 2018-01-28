@@ -4,26 +4,32 @@ package datastorage
 import (
 	"fmt"
 
+	"github.com/q231950/alethea/database"
+
 	"github.com/apex/log"
 	"github.com/go-pg/pg"
 	"github.com/go-pg/pg/orm"
 	"github.com/q231950/alethea/model"
 )
 
+type DataStorage interface {
+	CreateIncidentsTable()
+	StoreIncident(incident model.Incident) error
+}
+
 // DataStorage has a database where it stores build results in
-type DataStorage struct {
+type AletheaDataStorage struct {
 	database pg.DB
 }
 
-// NewDataStorage creates a new DataStorage. It needs a database to store build results in
-func NewDataStorage(database pg.DB) *DataStorage {
-	log.Infof("NewDataStorage")
-	ds := DataStorage{database: database}
-	return &ds
+// New creates a new DataStorage. It needs a database to store build results in
+func New() DataStorage {
+	log.Infof("New DataStorage")
+	return AletheaDataStorage{database: database.PostgresqlDatabase()}
 }
 
 // CreateIncidentsTable creates an incidents table if necessary
-func (ds *DataStorage) CreateIncidentsTable() {
+func (ds AletheaDataStorage) CreateIncidentsTable() {
 	log.Infof("%s", ds.database)
 	incident := model.Incident{}
 	log.Infof("%s", incident)
@@ -49,7 +55,7 @@ func (ds *DataStorage) CreateIncidentsTable() {
 }
 
 // StoreIncident stores the given build result in the database
-func (ds *DataStorage) StoreIncident(incident model.Incident) error {
+func (ds AletheaDataStorage) StoreIncident(incident model.Incident) error {
 	log.Infof("log incident")
 	err := ds.database.Insert(&incident)
 	if err != nil {
