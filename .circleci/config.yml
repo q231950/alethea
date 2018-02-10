@@ -17,5 +17,5 @@ jobs:
       - run: ls
       - run: ls ${GOPATH}/src
       - run: ls ${GOPATH}/bin
-      - run: ${GOPATH}/bin/dep ensure
+      - run: ./dep ensure
       - run: go test -v ./...
