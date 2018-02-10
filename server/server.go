@@ -31,7 +31,7 @@ func NewServer(ds datastorage.DataStorage) Server {
 	server := Server{dataStorage: ds, httpServer: httpServer}
 
 	r.HandleFunc("/post", server.postStatusHandler)
-	r.HandleFunc("/fun", Fun)
+	r.HandleFunc("/print", server.print)
 	r.HandleFunc("/", server.handler)
 
 	return server
@@ -42,8 +42,11 @@ func (server *Server) Serve() error {
 	return server.httpServer.ListenAndServe()
 }
 
-func Fun(w http.ResponseWriter, r *http.Request) {
-	io.WriteString(w, "fun")
+func (server *Server) print(w http.ResponseWriter, r *http.Request) {
+	io.WriteString(w, "print")
+	body, err := ioutil.ReadAll(r.Body)
+
+	log.Infof("Request: %s", r.Method)
 	w.WriteHeader(http.StatusOK)
 }
 
