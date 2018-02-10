@@ -16,7 +16,7 @@ jobs:
 
 notify:
   webhooks:
-    - url: https://alethea3000.herokuapp.com/post
+    - url: https://alethea3000.herokuapp.com/print
 
 deployment:
   staging:
