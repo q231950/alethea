@@ -7,15 +7,7 @@ jobs:
     docker:
       - image: circleci/golang:1.9
       - image: circleci/postgres:9.4
-
-    working_directory: /go/src/github.com/q231950/alethea
     steps:
       - checkout
-
-      - run: go get -v github.com/golang/dep
-      - run: go build -o dep github.com/golang/dep
-      - run: ls
-      - run: ls ${GOPATH}/src
-      - run: ls ${GOPATH}/bin
-      - run: ./dep ensure
+      - run: go get ./... -v
       - run: go test -v ./...
