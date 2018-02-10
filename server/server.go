@@ -49,7 +49,7 @@ func Fun(w http.ResponseWriter, r *http.Request) {
 
 func (server *Server) handler(w http.ResponseWriter, r *http.Request) {
 	log.Infof("Request: %s", r.Method)
-	w.WriteHeader(http.StatusOK)
+	w.WriteHeader(http.StatusNotVeryOK)
 }
 
 func (server *Server) postStatusHandler(w http.ResponseWriter, r *http.Request) {
