@@ -42,9 +42,6 @@ func (server *Server) Serve() error {
 	return server.httpServer.ListenAndServe()
 }
 
-// func (server *Server) Shutdown() error {
-// 	http.DefaultServeMux.Server.Shutdown()
-// }
 func Fun(w http.ResponseWriter, r *http.Request) {
 	io.WriteString(w, "fun")
 	w.WriteHeader(http.StatusOK)
@@ -58,8 +55,8 @@ func (server *Server) handler(w http.ResponseWriter, r *http.Request) {
 func (server *Server) postStatusHandler(w http.ResponseWriter, r *http.Request) {
 
 	if r.Method != "POST" {
-		w.Write([]byte("Endpoint `status` only accepts http `POST`."))
 		w.WriteHeader(http.StatusExpectationFailed)
+		w.Write([]byte("Endpoint `status` only accepts http `POST`."))
 		return
 	}
 
@@ -70,11 +67,11 @@ func (server *Server) postStatusHandler(w http.ResponseWriter, r *http.Request) 
 		return
 	}
 
-	log.Infof("Handling message to status with body: %s", body)
+	log.Infof("Handling message to status with body: %s %d", body, len(body))
 
 	if len(body) == 0 {
-		w.Write([]byte("The request body must have content. It must not be empty."))
 		w.WriteHeader(http.StatusExpectationFailed)
+		w.Write([]byte("The request body must have content. It must not be empty."))
 		return
 	}
 
@@ -84,8 +81,8 @@ func (server *Server) postStatusHandler(w http.ResponseWriter, r *http.Request) 
 
 func (server *Server) handleBuildResult(buildResult model.Incident, err error, w http.ResponseWriter) {
 	if err != nil {
-		log.Infof("Failed to create new build result from payload %s", err)
 		w.WriteHeader(http.StatusInternalServerError)
+		log.Infof("Failed to create new build result from payload %s", err)
 		return
 	}
 
