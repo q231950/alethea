@@ -45,8 +45,10 @@ func (server *Server) Serve() error {
 func (server *Server) print(w http.ResponseWriter, r *http.Request) {
 	io.WriteString(w, "print")
 	body, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		log.Infof("Body: %s", body)
+	}
 
-	log.Infof("Request: %s", r.Method)
 	w.WriteHeader(http.StatusOK)
 }
 
