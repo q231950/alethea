@@ -12,7 +12,9 @@ jobs:
     steps:
       - checkout
 
-      - run: ls ${HOME}/.go_workspace/
+      - run: echo ${GOROOT}
+      - run: echo ${GOPATH}
+      - run: ls ${HOME}
       - run: go get github.com/golang/dep
       - run: ${HOME}/.go_workspace/bin/dep ensure
       - run: go test -v ./...
