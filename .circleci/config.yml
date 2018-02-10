@@ -12,7 +12,6 @@ jobs:
     steps:
       - checkout
 
-      - run: ls ${HOME}
       - run: go get github.com/golang/dep
-      - run: /go/bin/dep ensure
+      - run: ${GOPATH}/bin/dep ensure
       - run: go test -v ./...
