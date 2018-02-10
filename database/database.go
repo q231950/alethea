@@ -15,7 +15,7 @@ func PostgresqlDatabase() pg.DB {
 	database := os.Getenv("ALETHEA_POSTGRESQL_DATABASE")
 	address := os.Getenv("ALETHEA_POSTGRESQL_ADDRESS")
 	return *pg.Connect(&pg.Options{
-		Addr: address,
+		Addr:     address,
 		User:     user,
 		Password: password,
 		Database: database,
