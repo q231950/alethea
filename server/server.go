@@ -31,6 +31,8 @@ func (server *Server) Serve() error {
 
 func (server *Server) handler(w http.ResponseWriter, r *http.Request) {
 	log.Infof("Request: %s", r.Method)
+	io.WriteString(w, "I live alive\n")
+	w.WriteHeader(http.StatusOK)
 }
 
 func (server *Server) postStatusHandler(w http.ResponseWriter, r *http.Request) {
