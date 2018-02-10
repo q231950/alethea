@@ -40,6 +40,18 @@
   revision = "b3e60bcdc577185fce3cf625fc96b62857ce5574"
 
 [[projects]]
+  name = "github.com/gorilla/context"
+  packages = ["."]
+  revision = "1ea25387ff6f684839d82767c1733ff4d4d15d0a"
+  version = "v1.1"
+
+[[projects]]
+  name = "github.com/gorilla/mux"
+  packages = ["."]
+  revision = "53c1911da2b537f792e7cafcb446b05ffe33b996"
+  version = "v1.6.1"
+
+[[projects]]
   branch = "master"
   name = "github.com/jinzhu/inflection"
   packages = ["."]
@@ -77,6 +89,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "ca67a8d338ac0fd4c79b690c474f49fa521ea509a193379782244aeab3c967d2"
+  inputs-digest = "c252908d2399a4147950df02c4abfc252896d6dd9887e756a8feec7d00ac3832"
   solver-name = "gps-cdcl"
   solver-version = 1
