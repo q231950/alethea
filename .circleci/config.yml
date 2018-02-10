@@ -12,6 +12,7 @@ jobs:
     steps:
       - checkout
 
+      - run: export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
       - run: go get github.com/golang/dep
       - run: dep ensure
       - run: go test -v ./...
