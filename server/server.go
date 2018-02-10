@@ -3,11 +3,13 @@
 package server
 
 import (
+	"io"
 	"io/ioutil"
 	"net/http"
 	"os"
 
 	"github.com/apex/log"
+	"github.com/gorilla/mux"
 	"github.com/q231950/alethea/datastorage"
 	"github.com/q231950/alethea/model"
 )
@@ -15,34 +17,49 @@ import (
 // Server serves the http API endpoint
 type Server struct {
 	dataStorage datastorage.DataStorage
+	httpServer  http.Server
 }
 
 // NewServer returns an instance of Server
 func NewServer(ds datastorage.DataStorage) Server {
-	server := Server{dataStorage: ds}
-	http.HandleFunc("/post", server.postStatusHandler)
-	http.HandleFunc("/", server.handler)
+	r := mux.NewRouter()
+	httpServer := http.Server{
+		Addr:    ":" + os.Getenv("PORT"),
+		Handler: r,
+	}
+
+	server := Server{dataStorage: ds, httpServer: httpServer}
+
+	r.HandleFunc("/post", server.postStatusHandler)
+	r.HandleFunc("/fun", Fun)
+	r.HandleFunc("/", server.handler)
+
 	return server
 }
 
 // Serve starts serving the service
 func (server *Server) Serve() error {
-	return http.ListenAndServe(":"+os.Getenv("PORT"), nil)
+	return server.httpServer.ListenAndServe()
 }
 
 // func (server *Server) Shutdown() error {
 // 	http.DefaultServeMux.Server.Shutdown()
 // }
+func Fun(w http.ResponseWriter, r *http.Request) {
+	io.WriteString(w, "fun")
+	w.WriteHeader(http.StatusOK)
+}
 
 func (server *Server) handler(w http.ResponseWriter, r *http.Request) {
 	log.Infof("Request: %s", r.Method)
+	w.WriteHeader(http.StatusOK)
 }
 
 func (server *Server) postStatusHandler(w http.ResponseWriter, r *http.Request) {
 
 	if r.Method != "POST" {
-		w.WriteHeader(http.StatusExpectationFailed)
 		w.Write([]byte("Endpoint `status` only accepts http `POST`."))
+		w.WriteHeader(http.StatusExpectationFailed)
 		return
 	}
 
