@@ -19,3 +19,10 @@ required = ["github.com/golang/mock/mockgen"]
   [[constraint]]
     name = "github.com/golang/mock"
     branch = "master"
+
+# Meta
+
+[metadata.heroku]
+  root-package = "github.com/q231950/alethea"
+  go-version = "1.9"
+  install = [ "./..." ]
