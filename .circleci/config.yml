@@ -9,5 +9,5 @@ jobs:
       - image: circleci/postgres:9.4
     steps:
       - checkout
-      - run: go get ./... -v
+      - run: go get ./...
       - run: go test -v ./...
