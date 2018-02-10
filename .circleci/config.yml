@@ -13,6 +13,8 @@ jobs:
       - checkout
 
       - run: go get -v github.com/golang/dep
+      - run: go build -o dep github.com/golang/dep
+      - run: ls
       - run: ls ${GOPATH}/src
       - run: ls ${GOPATH}/bin
       - run: ${GOPATH}/bin/dep ensure
