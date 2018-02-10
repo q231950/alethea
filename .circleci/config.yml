@@ -13,3 +13,9 @@ jobs:
       - checkout
       - run: go get -v -t -d ./...
       - run: go test -v ./...
+
+deployment:
+  staging:
+    branch: master
+    heroku:
+      appname: alethea3000
