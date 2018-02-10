@@ -26,7 +26,7 @@ func NewServer(ds datastorage.DataStorage) Server {
 
 // Serve starts serving the service
 func (server *Server) Serve() error {
-	return http.ListenAndServe(":8080", nil)
+	return http.ListenAndServe(":443", nil)
 }
 
 func (server *Server) handler(w http.ResponseWriter, r *http.Request) {
