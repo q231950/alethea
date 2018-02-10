@@ -5,6 +5,7 @@ package server
 import (
 	"io/ioutil"
 	"net/http"
+	"os"
 
 	"github.com/apex/log"
 	"github.com/q231950/alethea/datastorage"
@@ -26,7 +27,7 @@ func NewServer(ds datastorage.DataStorage) Server {
 
 // Serve starts serving the service
 func (server *Server) Serve() error {
-	return http.ListenAndServe(":8080", nil)
+	return http.ListenAndServe(":"+os.Getenv("PORT"), nil)
 }
 
 // func (server *Server) Shutdown() error {
