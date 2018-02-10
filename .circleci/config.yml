@@ -12,7 +12,8 @@ jobs:
     steps:
       - checkout
 
-      - run: go get github.com/golang/dep
+      - run: go get -v github.com/golang/dep
+      - run: ls ${GOPATH}/src
       - run: ls ${GOPATH}/bin
       - run: ${GOPATH}/bin/dep ensure
       - run: go test -v ./...
