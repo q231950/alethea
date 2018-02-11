@@ -44,10 +44,10 @@ func (server *Server) Serve() error {
 func (server *Server) print(w http.ResponseWriter, r *http.Request) {
 	log.Info("Print method called")
 	body, err := ioutil.ReadAll(r.Body)
-	if err != nil {
-		log.Infof("Body: %s", body)
+	if err == nil {
+		log.Infof("Body: %s", string(body))
 	} else {
-		log.Info("No body")
+		log.Infof("No body %s", err)
 	}
 
 	w.WriteHeader(http.StatusOK)
