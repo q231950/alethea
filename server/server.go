@@ -3,7 +3,6 @@
 package server
 
 import (
-	"io"
 	"io/ioutil"
 	"net/http"
 	"os"
@@ -43,10 +42,12 @@ func (server *Server) Serve() error {
 }
 
 func (server *Server) print(w http.ResponseWriter, r *http.Request) {
-	io.WriteString(w, "print")
+	log.Info("Print method called")
 	body, err := ioutil.ReadAll(r.Body)
 	if err != nil {
 		log.Infof("Body: %s", body)
+	} else {
+		log.Info("No body")
 	}
 
 	w.WriteHeader(http.StatusOK)
