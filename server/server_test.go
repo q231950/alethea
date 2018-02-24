@@ -39,7 +39,7 @@ func TestPostStatusHandlerRequiresBody(t *testing.T) {
 	server := NewServer(mockDataStorage, 8080)
 	w := httptest.NewRecorder()
 	req := httptest.NewRequest("POST", "http://example.com/foo", nil)
-	server.postStatusHandler(w, req)
+	server.postStatusHandler(w, req, Unknown)
 
 	resp := w.Result()
 	assert.Equal(t, http.StatusExpectationFailed, resp.StatusCode)
@@ -52,7 +52,7 @@ func TestPostStatusHandlerErrorsOnNonPostMethod(t *testing.T) {
 	server := NewServer(mockDataStorage, 8080)
 	w := httptest.NewRecorder()
 	req := httptest.NewRequest("GET", "http://example.com/foo", strings.NewReader("{\"json\":23}"))
-	server.postStatusHandler(w, req)
+	server.postStatusHandler(w, req, Unknown)
 
 	resp := w.Result()
 	assert.Equal(t, resp.StatusCode, http.StatusExpectationFailed)
@@ -68,7 +68,7 @@ func TestPostStatusHandlerCreatesStatusEntry(t *testing.T) {
 	server := NewServer(mockDataStorage, 8080)
 	w := httptest.NewRecorder()
 	req := httptest.NewRequest("POST", "http://example.com/foo", strings.NewReader("{\"json\":23}"))
-	server.postStatusHandler(w, req)
+	server.postStatusHandler(w, req, Unknown)
 
 	resp := w.Result()
 	assert.Equal(t, resp.StatusCode, http.StatusAccepted)

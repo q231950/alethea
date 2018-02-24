@@ -13,6 +13,15 @@ import (
 	"github.com/q231950/alethea/model"
 )
 
+// CI represents the type of CI
+type CI int
+
+const (
+	Unknown CI = 0
+	Circle  CI = 1
+	Jenkins CI = 2
+)
+
 // Server serves the http API endpoint
 type Server struct {
 	dataStorage datastorage.DataStorage
@@ -30,7 +39,7 @@ func NewServer(ds datastorage.DataStorage, port int) Server {
 
 	server := Server{dataStorage: ds, httpServer: httpServer}
 
-	r.HandleFunc("/post", server.postStatusHandler)
+	r.HandleFunc("/post/circle", server.postCircleCIBuildStatusHandler)
 	r.HandleFunc("/print", server.print)
 	r.HandleFunc("/", server.handler)
 
@@ -59,7 +68,11 @@ func (server *Server) handler(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 }
 
-func (server *Server) postStatusHandler(w http.ResponseWriter, r *http.Request) {
+func (server *Server) postCircleCIBuildStatusHandler(w http.ResponseWriter, r *http.Request) {
+	server.postStatusHandler(w, r, Circle)
+}
+
+func (server *Server) postStatusHandler(w http.ResponseWriter, r *http.Request, kind CI) {
 
 	if r.Method != "POST" {
 		w.WriteHeader(http.StatusExpectationFailed)
