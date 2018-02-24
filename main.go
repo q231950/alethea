@@ -19,6 +19,6 @@ func main() {
 	dataStorage := datastorage.New()
 	dataStorage.CreateIncidentsTable()
 
-	server := server.NewServer(dataStorage, os.Getenv("PORT")
+	server := server.NewServer(dataStorage, os.Getenv("PORT"))
 	server.Serve()
 }
