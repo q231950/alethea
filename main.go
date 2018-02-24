@@ -1,7 +1,6 @@
 package main
 
 import (
-	"flag"
 	"os"
 
 	"github.com/apex/log"

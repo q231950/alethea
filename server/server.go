@@ -21,11 +21,10 @@ type Server struct {
 }
 
 // NewServer returns an instance of Server
-func NewServer(ds datastorage.DataStorage, port int) *Server {
+func NewServer(ds datastorage.DataStorage, port string) *Server {
 	r := mux.NewRouter()
-	p := strconv.Itoa(port)
 	httpServer := http.Server{
-		Addr:    ":" + p,
+		Addr:    ":" + port,
 		Handler: r,
 	}
 
