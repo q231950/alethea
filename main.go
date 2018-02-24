@@ -10,8 +10,6 @@ import (
 	"github.com/q231950/alethea/server"
 )
 
-const defaultPort = 8080
-
 func main() {
 	log.SetHandler(cli.New(os.Stderr))
 	log.SetLevel(log.InfoLevel)
@@ -21,9 +19,6 @@ func main() {
 	dataStorage := datastorage.New()
 	dataStorage.CreateIncidentsTable()
 
-	p := flag.Int("port", defaultPort, "help message for flagname")
-	flag.Parse()
-
-	server := server.NewServer(dataStorage, *p)
+	server := server.NewServer(dataStorage, os.Getenv("PORT")
 	server.Serve()
 }
