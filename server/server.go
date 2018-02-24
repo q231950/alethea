@@ -5,7 +5,6 @@ package server
 import (
 	"io/ioutil"
 	"net/http"
-	"strconv"
 
 	"github.com/apex/log"
 	"github.com/gorilla/mux"
