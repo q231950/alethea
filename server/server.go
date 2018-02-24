@@ -44,7 +44,7 @@ func (server *Server) Serve() error {
 func (server *Server) print(w http.ResponseWriter, r *http.Request) {
 	log.Info("Print method called")
 	body, err := ioutil.ReadAll(r.Body)
-	if err != nil {
+	if err == nil {
 		log.Infof("Body: %s", body)
 	} else {
 		log.Info("No body")
