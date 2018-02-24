@@ -5,7 +5,7 @@ package server
 import (
 	"io/ioutil"
 	"net/http"
-	"os"
+	"strconv"
 
 	"github.com/apex/log"
 	"github.com/gorilla/mux"
@@ -20,10 +20,11 @@ type Server struct {
 }
 
 // NewServer returns an instance of Server
-func NewServer(ds datastorage.DataStorage) Server {
+func NewServer(ds datastorage.DataStorage, port int) Server {
 	r := mux.NewRouter()
+	p := strconv.Itoa(port)
 	httpServer := http.Server{
-		Addr:    ":" + os.Getenv("PORT"),
+		Addr:    ":" + p,
 		Handler: r,
 	}
 
