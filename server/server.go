@@ -9,9 +9,9 @@ import (
 
 	"github.com/apex/log"
 	"github.com/gorilla/mux"
+	"github.com/q231950/alethea/ci"
 	"github.com/q231950/alethea/datastorage"
 	"github.com/q231950/alethea/model"
-	"github.com/q231950/alethea/server/ci"
 )
 
 // Server serves the http API endpoint
@@ -87,7 +87,7 @@ func (server *Server) postStatusHandler(w http.ResponseWriter, r *http.Request, 
 		return
 	}
 
-	buildResult, err := model.NewIncident()
+	buildResult, err := model.NewIncident(kind, body)
 	server.handleBuildResult(buildResult, err, w)
 }
 
