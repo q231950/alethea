@@ -29,7 +29,7 @@ type Server struct {
 }
 
 // NewServer returns an instance of Server
-func NewServer(ds datastorage.DataStorage, port int) Server {
+func NewServer(ds datastorage.DataStorage, port int) *Server {
 	r := mux.NewRouter()
 	p := strconv.Itoa(port)
 	httpServer := http.Server{
@@ -37,7 +37,7 @@ func NewServer(ds datastorage.DataStorage, port int) Server {
 		Handler: r,
 	}
 
-	server := Server{dataStorage: ds, httpServer: httpServer}
+	server := &Server{dataStorage: ds, httpServer: httpServer}
 
 	r.HandleFunc("/post/circle", server.postCircleCIBuildStatusHandler)
 	r.HandleFunc("/print", server.print)
