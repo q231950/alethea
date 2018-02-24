@@ -4,7 +4,7 @@ import (
 	"reflect"
 
 	"github.com/golang/mock/gomock"
-	"github.com/q231950/alethea/server/ci"
+	"github.com/q231950/alethea/ci"
 )
 
 type ciType struct{ kind ci.CI }

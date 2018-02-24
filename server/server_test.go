@@ -8,10 +8,10 @@ import (
 	"testing"
 
 	"github.com/golang/mock/gomock"
+	"github.com/q231950/alethea/ci"
 	"github.com/q231950/alethea/database/match"
 	"github.com/q231950/alethea/mocks"
 	"github.com/q231950/alethea/model"
-	"github.com/q231950/alethea/server/ci"
 	"github.com/stretchr/testify/assert"
 )
 
