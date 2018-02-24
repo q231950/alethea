@@ -11,15 +11,7 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/q231950/alethea/datastorage"
 	"github.com/q231950/alethea/model"
-)
-
-// CI represents the type of CI
-type CI int
-
-const (
-	Unknown CI = 0
-	Circle  CI = 1
-	Jenkins CI = 2
+	"github.com/q231950/alethea/server/ci"
 )
 
 // Server serves the http API endpoint
@@ -40,7 +32,7 @@ func NewServer(ds datastorage.DataStorage, port int) *Server {
 	server := &Server{dataStorage: ds, httpServer: httpServer}
 
 	r.HandleFunc("/post/circle", server.postCircleCIBuildStatusHandler)
-	r.HandleFunc("/print", server.print)
+	r.HandleFunc("/post", server.print)
 	r.HandleFunc("/", server.handler)
 
 	return server
@@ -69,10 +61,10 @@ func (server *Server) handler(w http.ResponseWriter, r *http.Request) {
 }
 
 func (server *Server) postCircleCIBuildStatusHandler(w http.ResponseWriter, r *http.Request) {
-	server.postStatusHandler(w, r, Circle)
+	server.postStatusHandler(w, r, ci.Circle)
 }
 
-func (server *Server) postStatusHandler(w http.ResponseWriter, r *http.Request, kind CI) {
+func (server *Server) postStatusHandler(w http.ResponseWriter, r *http.Request, kind ci.CI) {
 
 	if r.Method != "POST" {
 		w.WriteHeader(http.StatusExpectationFailed)
