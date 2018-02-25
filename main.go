@@ -1,13 +1,17 @@
 package main
 
 import (
+	"flag"
 	"os"
+	"strconv"
 
 	"github.com/apex/log"
 	"github.com/apex/log/handlers/cli"
 	"github.com/q231950/alethea/datastorage"
 	"github.com/q231950/alethea/server"
 )
+
+const defaultPort int = 8080
 
 func main() {
 	log.SetHandler(cli.New(os.Stderr))
@@ -18,6 +22,17 @@ func main() {
 	dataStorage := datastorage.New()
 	dataStorage.CreateIncidentsTable()
 
-	server := server.NewServer(dataStorage, os.Getenv("PORT"))
+	var port string
+	var portEnvironmentVariable = os.Getenv("PORT")
+	if len(portEnvironmentVariable) > 0 {
+		port = portEnvironmentVariable
+	} else {
+		p := flag.Int("port", defaultPort, "help message for flagname")
+		flag.Parse()
+		port = strconv.Itoa(*p)
+	}
+
+	log.Infof("Creating new alethea server, serving port %s", port)
+	server := server.NewServer(dataStorage, port)
 	server.Serve()
 }

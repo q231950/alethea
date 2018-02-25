@@ -28,3 +28,5 @@ You can run **alethea** with a single parameter, the port which it will serve. I
 ```bash
 alethea --port=8080
 ```
+
+Note: Heroku requires to use the exported `PORT` environment variable to be used for services. If a `PORT` environment variable is exported, it will be used to serve **alethea**.
