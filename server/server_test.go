@@ -24,7 +24,7 @@ func TestPostStatusHandler(t *testing.T) {
 	mockCtrl := gomock.NewController(t)
 	defer mockCtrl.Finish()
 	mockDataStorage := mocks.NewMockDataStorage(mockCtrl)
-	server := NewServer(mockDataStorage, 8080)
+	server := NewServer(mockDataStorage, "8080")
 	w := httptest.NewRecorder()
 	err := errors.New("some error when creating the build result")
 	incident := model.Incident{}
@@ -38,7 +38,7 @@ func TestPostStatusHandlerRequiresBody(t *testing.T) {
 	mockCtrl := gomock.NewController(t)
 	defer mockCtrl.Finish()
 	mockDataStorage := mocks.NewMockDataStorage(mockCtrl)
-	server := NewServer(mockDataStorage, 8080)
+	server := NewServer(mockDataStorage, "8080")
 	w := httptest.NewRecorder()
 	req := httptest.NewRequest("POST", "http://example.com/foo", nil)
 	server.postStatusHandler(w, req, ci.Unknown)
@@ -51,7 +51,7 @@ func TestPostStatusHandlerErrorsOnNonPostMethod(t *testing.T) {
 	mockCtrl := gomock.NewController(t)
 	defer mockCtrl.Finish()
 	mockDataStorage := mocks.NewMockDataStorage(mockCtrl)
-	server := NewServer(mockDataStorage, 8080)
+	server := NewServer(mockDataStorage, "8080")
 	w := httptest.NewRecorder()
 	req := httptest.NewRequest("GET", "http://example.com/foo", strings.NewReader("{\"json\":23}"))
 	server.postStatusHandler(w, req, ci.Unknown)
@@ -67,7 +67,7 @@ func TestPostStatusHandlerCreatesStatusEntry(t *testing.T) {
 	mockDataStorage.EXPECT().
 		StoreIncident(gomock.Any())
 
-	server := NewServer(mockDataStorage, 8080)
+	server := NewServer(mockDataStorage, "8080")
 	w := httptest.NewRecorder()
 	req := httptest.NewRequest("POST", "http://example.com/foo", strings.NewReader("{\"json\":23}"))
 	server.postStatusHandler(w, req, ci.Unknown)
@@ -83,7 +83,7 @@ func TestPostCircleCIBuildStatusHandlerUsesCircleCIType(t *testing.T) {
 	mockDataStorage.EXPECT().
 		StoreIncident(match.CIType(ci.Circle))
 
-	server := NewServer(mockDataStorage, 8080)
+	server := NewServer(mockDataStorage, "8080")
 	w := httptest.NewRecorder()
 	req := httptest.NewRequest("POST", "http://example.com/post/circle", strings.NewReader("{\"json\":23}"))
 	server.postCircleCIBuildStatusHandler(w, req)
