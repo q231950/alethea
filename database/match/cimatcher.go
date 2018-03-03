@@ -14,7 +14,7 @@ func CIType(kind ci.CI) gomock.Matcher {
 }
 
 func (o *ciType) Matches(x interface{}) bool {
-	return reflect.TypeOf(x).String() == o.kind.String()
+	return reflect.TypeOf(x).String() == o.String()
 }
 
 func (o *ciType) String() string {

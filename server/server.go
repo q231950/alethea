@@ -85,7 +85,7 @@ func (server *Server) postStatusHandler(w http.ResponseWriter, r *http.Request, 
 		return
 	}
 
-	buildResult, err := model.NewIncident(kind, body)
+	buildResult, err := model.NewIncidentFromJson(kind, body)
 	server.handleBuildResult(buildResult, err, w)
 }
 

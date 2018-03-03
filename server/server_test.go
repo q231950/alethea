@@ -70,7 +70,7 @@ func TestPostStatusHandlerCreatesStatusEntry(t *testing.T) {
 	server := NewServer(mockDataStorage, "8080")
 	w := httptest.NewRecorder()
 	req := httptest.NewRequest("POST", "http://example.com/foo", strings.NewReader("{\"json\":23}"))
-	server.postStatusHandler(w, req, ci.Unknown)
+	server.postStatusHandler(w, req, ci.Circle)
 
 	resp := w.Result()
 	assert.Equal(t, resp.StatusCode, http.StatusAccepted)

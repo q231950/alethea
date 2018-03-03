@@ -19,7 +19,7 @@ type Incident struct {
 }
 
 // NewIncident creates an incident with a random identifier
-func NewIncident(c ci.CI, jsonblob []byte) (Incident, error) {
+func NewIncidentFromJson(c ci.CI, jsonblob []byte) (Incident, error) {
 	if c == ci.Circle {
 		var incident *ci.CircleCIIncident
 		error := json.Unmarshal(jsonblob, &incident)
@@ -33,4 +33,9 @@ func NewIncident(c ci.CI, jsonblob []byte) (Incident, error) {
 	}
 	return Incident{"", "", true, "", "", "", ""},
 		errors.New("Unable to unmarshal post body to incident")
+}
+
+func (i *Incident) String() string {
+	// fmt.Println(i.CI)
+	return i.CI
 }
