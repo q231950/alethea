@@ -3,18 +3,18 @@ package datastorage
 
 import (
 	"fmt"
+	"reflect"
 
 	"github.com/q231950/alethea/database"
 
 	"github.com/apex/log"
 	"github.com/go-pg/pg"
 	"github.com/go-pg/pg/orm"
-	"github.com/q231950/alethea/model"
 )
 
 type DataStorage interface {
-	CreateIncidentsTable()
-	StoreIncident(incident model.Incident) error
+	CreateTable(model interface{})
+	StoreIncident(model interface{}) error
 }
 
 // DataStorage has a database where it stores build results in
@@ -28,12 +28,10 @@ func New() DataStorage {
 	return AletheaDataStorage{database: database.PostgresqlDatabase()}
 }
 
-// CreateIncidentsTable creates an incidents table if necessary
-func (ds AletheaDataStorage) CreateIncidentsTable() {
-	log.Infof("%s", ds.database)
-	incident := model.Incident{}
-	log.Infof("%s", incident)
-	ds.database.CreateTable(&incident, &orm.CreateTableOptions{
+// CreateTable creates a table for the given model if none exists yet
+func (ds AletheaDataStorage) CreateTable(model interface{}) {
+	log.Debugf("Creating table for database (%s) if necessary", ds.database)
+	ds.database.CreateTable(model, &orm.CreateTableOptions{
 		Temp: false,
 	})
 
@@ -49,13 +47,12 @@ func (ds AletheaDataStorage) CreateIncidentsTable() {
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println(info)
 
-	log.Infof("CreateIncidentsTable")
+	log.Infof("Created table for model %s", reflect.TypeOf(model))
 }
 
 // StoreIncident stores the given build result in the database
-func (ds AletheaDataStorage) StoreIncident(incident model.Incident) error {
+func (ds AletheaDataStorage) StoreIncident(incident interface{}) error {
 	log.Infof("log incident")
 	err := ds.database.Insert(&incident)
 	if err != nil {
