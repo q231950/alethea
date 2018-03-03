@@ -2,7 +2,6 @@
 package datastorage
 
 import (
-	"fmt"
 	"reflect"
 
 	"github.com/q231950/alethea/database"
@@ -14,7 +13,7 @@ import (
 
 type DataStorage interface {
 	CreateTable(model interface{})
-	StoreIncident(model interface{}) error
+	StoreCIBuild(model interface{}) error
 }
 
 // DataStorage has a database where it stores build results in
@@ -51,13 +50,12 @@ func (ds AletheaDataStorage) CreateTable(model interface{}) {
 	log.Infof("Created table for model %s", reflect.TypeOf(model))
 }
 
-// StoreIncident stores the given build result in the database
-func (ds AletheaDataStorage) StoreIncident(incident interface{}) error {
-	log.Infof("log incident")
-	err := ds.database.Insert(&incident)
-	if err != nil {
-		panic(err)
+// StoreCIBuild stores the given CI build in the database
+func (ds AletheaDataStorage) StoreCIBuild(build interface{}) error {
+	log.Infof("Store CI build")
+	err := ds.database.Insert(&build)
+	if err == nil {
+		log.Infof("Stored build %s", build)
 	}
-	fmt.Println(incident)
 	return err
 }

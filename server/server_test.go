@@ -65,7 +65,7 @@ func TestPostStatusHandlerCreatesStatusEntry(t *testing.T) {
 	defer mockCtrl.Finish()
 	mockDataStorage := mocks.NewMockDataStorage(mockCtrl)
 	mockDataStorage.EXPECT().
-		StoreIncident(gomock.Any())
+		StoreCIBuild(gomock.Any())
 
 	server := NewServer(mockDataStorage, "8080")
 	w := httptest.NewRecorder()
@@ -81,7 +81,7 @@ func TestPostCircleCIBuildStatusHandlerUsesCircleCIType(t *testing.T) {
 	defer mockCtrl.Finish()
 	mockDataStorage := mocks.NewMockDataStorage(mockCtrl)
 	mockDataStorage.EXPECT().
-		StoreIncident(match.CIType(ci.Circle))
+		StoreCIBuild(match.CIType(ci.Circle))
 
 	server := NewServer(mockDataStorage, "8080")
 	w := httptest.NewRecorder()

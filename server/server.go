@@ -97,6 +97,6 @@ func (server *Server) handleBuildResult(buildResult model.Incident, err error, w
 	}
 
 	log.Infof("Storing status entry %s", buildResult)
-	server.dataStorage.StoreIncident(buildResult)
+	server.dataStorage.StoreCIBuild(buildResult)
 	w.WriteHeader(http.StatusAccepted)
 }
