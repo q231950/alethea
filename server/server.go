@@ -5,10 +5,10 @@ package server
 import (
 	"io/ioutil"
 	"net/http"
-	"strconv"
 
 	"github.com/apex/log"
 	"github.com/gorilla/mux"
+	"github.com/q231950/alethea/ci"
 	"github.com/q231950/alethea/datastorage"
 	"github.com/q231950/alethea/model"
 )
@@ -20,18 +20,17 @@ type Server struct {
 }
 
 // NewServer returns an instance of Server
-func NewServer(ds datastorage.DataStorage, port int) Server {
+func NewServer(ds datastorage.DataStorage, port string) *Server {
 	r := mux.NewRouter()
-	p := strconv.Itoa(port)
 	httpServer := http.Server{
-		Addr:    ":" + p,
+		Addr:    ":" + port,
 		Handler: r,
 	}
 
-	server := Server{dataStorage: ds, httpServer: httpServer}
+	server := &Server{dataStorage: ds, httpServer: httpServer}
 
-	r.HandleFunc("/post", server.postStatusHandler)
-	r.HandleFunc("/print", server.print)
+	r.HandleFunc("/post/circle", server.postCircleCIBuildStatusHandler)
+	r.HandleFunc("/post", server.print)
 	r.HandleFunc("/", server.handler)
 
 	return server
@@ -59,7 +58,11 @@ func (server *Server) handler(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 }
 
-func (server *Server) postStatusHandler(w http.ResponseWriter, r *http.Request) {
+func (server *Server) postCircleCIBuildStatusHandler(w http.ResponseWriter, r *http.Request) {
+	server.postStatusHandler(w, r, ci.Circle)
+}
+
+func (server *Server) postStatusHandler(w http.ResponseWriter, r *http.Request, kind ci.CI) {
 
 	if r.Method != "POST" {
 		w.WriteHeader(http.StatusExpectationFailed)
@@ -82,7 +85,7 @@ func (server *Server) postStatusHandler(w http.ResponseWriter, r *http.Request) 
 		return
 	}
 
-	buildResult, err := model.NewIncident()
+	buildResult, err := model.NewIncidentFromJson(kind, body)
 	server.handleBuildResult(buildResult, err, w)
 }
 
