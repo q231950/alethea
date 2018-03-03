@@ -36,6 +36,5 @@ func NewIncidentFromJson(c ci.CI, jsonblob []byte) (Incident, error) {
 }
 
 func (i *Incident) String() string {
-	// fmt.Println(i.CI)
 	return i.CI
 }

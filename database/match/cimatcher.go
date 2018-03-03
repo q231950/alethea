@@ -1,10 +1,9 @@
 package match
 
 import (
-	"reflect"
-
 	"github.com/golang/mock/gomock"
 	"github.com/q231950/alethea/ci"
+	"github.com/q231950/alethea/model"
 )
 
 type ciType struct{ kind ci.CI }
@@ -14,9 +13,11 @@ func CIType(kind ci.CI) gomock.Matcher {
 }
 
 func (o *ciType) Matches(x interface{}) bool {
-	return reflect.TypeOf(x).String() == o.String()
+	incident := x.(model.Incident)
+
+	return incident.String() == o.kind.String()
 }
 
 func (o *ciType) String() string {
-	return "is expected to be " + o.kind.String()
+	return "Kind of CI is expected to be:`" + o.kind.String() + "`"
 }
