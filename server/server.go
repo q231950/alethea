@@ -3,8 +3,10 @@
 package server
 
 import (
+	"fmt"
 	"io/ioutil"
 	"net/http"
+	"reflect"
 
 	"github.com/apex/log"
 	"github.com/gorilla/mux"
@@ -85,18 +87,25 @@ func (server *Server) postStatusHandler(w http.ResponseWriter, r *http.Request, 
 		return
 	}
 
-	buildResult, err := model.NewIncidentFromJson(kind, body)
-	server.handleBuildResult(buildResult, err, w)
+	build, err := model.NewIncidentFromJson(kind, body)
+	server.handleBuildResult(&build, err, w)
 }
 
-func (server *Server) handleBuildResult(buildResult model.Incident, err error, w http.ResponseWriter) {
+func (server *Server) handleBuildResult(build *model.Incident, err error, w http.ResponseWriter) {
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		log.Infof("Failed to create new build result from payload %s", err)
 		return
 	}
 
-	log.Infof("Storing status entry %s", buildResult)
-	server.dataStorage.StoreCIBuild(buildResult)
-	w.WriteHeader(http.StatusAccepted)
+	fmt.Printf("%s", reflect.TypeOf(build))
+	log.Infof("Storing CI build %s", build)
+
+	err = server.dataStorage.StoreCIBuild(build)
+	if err == nil {
+		w.WriteHeader(http.StatusAccepted)
+	} else {
+		w.WriteHeader(http.StatusInternalServerError)
+		w.Write([]byte("Failed to store entry in the database. (" + err.Error() + ")"))
+	}
 }

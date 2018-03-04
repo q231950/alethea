@@ -27,7 +27,7 @@ func TestPostStatusHandler(t *testing.T) {
 	server := NewServer(mockDataStorage, "8080")
 	w := httptest.NewRecorder()
 	err := errors.New("some error when creating the build result")
-	incident := model.Incident{}
+	incident := &model.Incident{}
 	server.handleBuildResult(incident, err, w)
 
 	resp := w.Result()

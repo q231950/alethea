@@ -1,6 +1,8 @@
 package match
 
 import (
+	"reflect"
+
 	"github.com/golang/mock/gomock"
 	"github.com/q231950/alethea/ci"
 	"github.com/q231950/alethea/model"
@@ -13,7 +15,9 @@ func CIType(kind ci.CI) gomock.Matcher {
 }
 
 func (o *ciType) Matches(x interface{}) bool {
-	incident := x.(model.Incident)
+	// incident := x.(model.Incident)
+	v := reflect.ValueOf(x).Interface()
+	incident := v.(model.Incident)
 
 	return incident.String() == o.kind.String()
 }

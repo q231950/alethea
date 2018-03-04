@@ -53,7 +53,7 @@ func (ds AletheaDataStorage) CreateTable(model interface{}) {
 // StoreCIBuild stores the given CI build in the database
 func (ds AletheaDataStorage) StoreCIBuild(build interface{}) error {
 	log.Infof("Store CI build")
-	err := ds.database.Insert(&build)
+	err := ds.database.Insert(build)
 	if err == nil {
 		log.Infof("Stored build %s", build)
 	}
