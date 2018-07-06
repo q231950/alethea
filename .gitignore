@@ -1,6 +1,10 @@
 .vscode
 alethea
 
+# vgo
+go.mod
+go.sum
+
 # Binaries for programs and plugins
 *.exe
 *.dll
