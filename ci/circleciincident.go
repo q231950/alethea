@@ -4,7 +4,7 @@ import (
 	"strconv"
 	"time"
 
-	uuid "github.com/satori/go.uuid"
+	"github.com/google/uuid"
 )
 
 type CircleCIIncident struct {
@@ -145,11 +145,7 @@ func (ci *CircleCIIncident) CI() string {
 }
 
 func (ci *CircleCIIncident) Identifier() string {
-	identifier, err := uuid.NewV4()
-	if err == nil {
-		return identifier.String()
-	}
-	return ""
+	return uuid.New().String()
 }
 
 func (ci *CircleCIIncident) Failed() bool {
