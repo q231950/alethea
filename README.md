@@ -16,7 +16,7 @@ $ go build
 go test ./... -cover
 ```
 
-### Postgres
+## Postgres
 
 **alethea** uses the following environment variables to store incidents in a Postgres database. You need a running Postgres database and export the following variables:
 - `ALETHEA_POSTGRESQL_USER`
