@@ -2,14 +2,12 @@
 
 [![CircleCI](https://circleci.com/gh/q231950/alethea.svg?style=svg)](https://circleci.com/gh/q231950/alethea)
 
-## Install
-
-Get the package and install it with `go install`:
+## Build
 
 ```bash
-$ go get github.com/q231950/alethea
-$ cd $GOPATH/src/github.com/q231950/
-$ go install
+$ git clone git@github.com:q231950/alethea.git
+$ cd alethea/
+$ go build
 ```
 
 ### Postgres
@@ -26,7 +24,8 @@ $ go install
 You can run **alethea** with a single parameter, the port which it will serve. If no port is specified, it will serve `8080`.
 
 ```bash
-alethea --port=8080
+$ ./alethea --port=8080
 ```
 
 Note: Heroku requires to use the exported `PORT` environment variable to be used for services. If a `PORT` environment variable is exported, it will be used to serve **alethea**.
+
