@@ -2,6 +2,8 @@
 
 [![CircleCI](https://circleci.com/gh/q231950/alethea.svg?style=svg)](https://circleci.com/gh/q231950/alethea)
 
+alethea is a small server for measuring CI results. Measurements are stored in a PostgreSQL database.
+
 ## Build
 
 ```shell
